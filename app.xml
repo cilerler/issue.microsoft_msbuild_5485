@@ -9,10 +9,9 @@
         <ProjectName>ConsoleApp1</ProjectName>
         <ProjectPath>.\src\$(ProjectName)</ProjectPath>
         <ProjectFile>$(ProjectPath)\$(ProjectName).csproj</ProjectFile>
-        <OutputPath Condition=" '$(OutputPath)' == '' ">.\artifacts\publish</OutputPath>
     </PropertyGroup>
 
-    <Target Name="Build" DependsOnTargets="BuildPackage;CopyOutput" />
+    <Target Name="Build" DependsOnTargets="BuildPackage" />
 
     <Target Name="BuildPackage">
         <Message Text="Starting to build v$(BuildVersion)" />
@@ -20,13 +19,6 @@
         <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Restore" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
         <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Build" Properties="Configuration=$(Configuration);Platform=$(Platform);Version=$(BuildVersion)" />
         <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Publish" Properties="Configuration=$(Configuration);Platform=$(Platform);Version=$(BuildVersion);ApplicationVersion=$(BuildVersion);ApplicationRevision=$(BuildId)" />
-    </Target>
-
-    <Target Name="CopyOutput">
-        <ItemGroup>
-            <PackagedFiles Include="$(ProjectPath)\bin\$(Configuration)\app.publish\**\*.*"/>
-        </ItemGroup>
-        <Copy SourceFiles="@(PackagedFiles)" DestinationFiles="@(PackagedFiles->'$(OutputPath)\%(RecursiveDir)%(Filename)%(Extension)')"/>
     </Target>
 
 </Project>

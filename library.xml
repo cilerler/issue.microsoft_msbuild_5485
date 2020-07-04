@@ -9,17 +9,23 @@
         <ProjectName>ClassLibrary1</ProjectName>
         <ProjectPath>.\src\$(ProjectName)</ProjectPath>
         <ProjectFile>$(ProjectPath)\$(ProjectName).csproj</ProjectFile>
-        <OutputPath Condition=" '$(OutputPath)' == '' ">..\..\artifacts\packages</OutputPath>
+        <PackageOutputPath Condition=" '$(PackageOutputPath)' == '' ">.\artifacts\packages</PackageOutputPath>
+		<PackagePath>$(PackageOutputPath)\$(ProjectName).$(BuildVersion)</PackagePath>
     </PropertyGroup>
 
-    <Target Name="Build" DependsOnTargets="BuildPackage" />
+    <Target Name="Build" DependsOnTargets="BuildPackage;ExtractPackage" />
 
     <Target Name="BuildPackage">
         <Message Text="Starting to build v$(BuildVersion)" />
         <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Clean" Properties="Configuration=$(Configuration);" />
         <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Restore" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
         <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Build" Properties="Configuration=$(Configuration);Platform=$(Platform);Version=$(BuildVersion)" />
-        <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Pack" Properties="Configuration=$(Configuration);Platform=$(Platform);Version=$(BuildVersion);PackageOutputPath=$(OutputPath)" />
+        <MSBuild Projects="$(ProjectFile)" ContinueOnError="false" Targets="Pack" Properties="Configuration=$(Configuration);Platform=$(Platform);Version=$(BuildVersion);PackageOutputPath=..\..\$(PackageOutputPath)" />
+    </Target>
+
+    <Target Name="ExtractPackage">
+        <RemoveDir Directories="$(PackagePath)" />
+        <Unzip SourceFiles="$(PackagePath).nupkg" DestinationFolder="$(PackagePath)" OverwriteReadOnlyFiles="true" />
     </Target>
 
 </Project>
