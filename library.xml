@@ -10,7 +10,8 @@
         <ProjectPath>.\src\$(ProjectName)</ProjectPath>
         <ProjectFile>$(ProjectPath)\$(ProjectName).csproj</ProjectFile>
         <PackageOutputPath Condition=" '$(PackageOutputPath)' == '' ">.\artifacts\packages</PackageOutputPath>
-		<PackagePath>$(PackageOutputPath)\$(ProjectName).$(BuildVersion)</PackagePath>
+        <PackagePath>$(PackageOutputPath)\$(ProjectName).$(BuildVersion)</PackagePath>
+        <UserDir>$(HOMEDRIVE)$(HOMEPATH)</UserDir>
     </PropertyGroup>
 
     <Target Name="Build" DependsOnTargets="BuildPackage;ExtractPackage" />
@@ -24,6 +25,7 @@
     </Target>
 
     <Target Name="ExtractPackage">
+        <RemoveDir Directories="$(UserDir)\.nuget\packages\$(ProjectName)\$(BuildVersion)" />
         <RemoveDir Directories="$(PackagePath)" />
         <Unzip SourceFiles="$(PackagePath).nupkg" DestinationFolder="$(PackagePath)" OverwriteReadOnlyFiles="true" />
     </Target>
