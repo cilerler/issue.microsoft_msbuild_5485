@@ -94,8 +94,11 @@
     <PackageReference Include="ClassLibrary1">
       <Version>0.0.0.1</Version>
     </PackageReference>
+    <!-- <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj">
+        <Project>{705ccf76-2c45-43d3-a839-7591813b5522}</Project>
+        <Name>ClassLibrary1</Name>
+    </ProjectReference> -->
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="LookupInProject\TextFile2.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
