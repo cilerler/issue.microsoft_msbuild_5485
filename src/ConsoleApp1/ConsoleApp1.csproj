@@ -91,8 +91,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <!-- <PackageReference Include="Microsoft.ClearScript">
+      <Version>6.0.2</Version>
+      <PrivateAssets>contentFiles;analyzers</PrivateAssets>
+    </PackageReference> -->
     <PackageReference Include="ClassLibrary1">
       <Version>0.0.0.1</Version>
+      <!-- <PrivateAssets>analyzers;build</PrivateAssets> -->
     </PackageReference>
     <!-- <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj">
         <Project>{705ccf76-2c45-43d3-a839-7591813b5522}</Project>
